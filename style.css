@@ -1,0 +1,31 @@
+body {
+  background-color: #f6f6f6;
+}
+#root {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  padding: 20px 20px 20px 20px;
+  background-color: lightcyan;
+}
+h3 {
+  text-align: center;
+  color: green;
+}
+img {
+  display: block;
+  margin: auto;
+}
+button {
+  display: block;
+  margin: auto;
+  padding: 0.4em 1em;
+  background: #668ad8;
+  color: #ffffff;
+  border-bottom: solid 3px #627295;
+  border-radius: 3px;
+}
+button:active {
+  transform: translateY(4px);
+  border-bottom: none;
+}

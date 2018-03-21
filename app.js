@@ -7,6 +7,12 @@ class App {
     this.i2cAccess = null;
     this.adc = null;
     this.testResult = null;
+
+    this.ws.onmessage =  message => {
+      this.voltElement.textContent = `VIN+ : ${message.volt} V`;
+      this.valueElement.textContent = message.value;
+      console.log(message.volt);
+    };
   }
 
   async test() {
@@ -42,7 +48,7 @@ class App {
 
     while (true) {
       const adcData = await this.adc.read().catch(err => { throw err; });
-      ws.send(adcData.value);
+      ws.send(adcData);
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;

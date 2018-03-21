@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>IoT-Monohoshi</title>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
 </head>
 <body>
-  <h3 id="volt"></h3>
-  <h3 id="value"></h3>
+  <div id="root">
+    <h3 id="volt"></h3>
+    <h3 id="value"></h3>
+    <h3 id="status-label"></h3>
+    <br />
+    <img id="status-image" />
+    <br />
+    <button id="status-button">状態を変える</button>
+  </div>
   <script src="https://mz4u.net/libs/gc2/polyfill.js"></script>
   <script src="./config.js"></script>
   <script src="./common.js"></script>
   <script src="./MCP3425.js"></script>
   <script src="./app.js"></script>
+  <script src="./status.js"></script>
   <script src="./main.js"></script>
 </body>
 </html>
