@@ -40,7 +40,7 @@ class App {
     const adcPort = this.i2cAccess.ports.get(1);
 
     this.adc = new MCP3425(adcPort, 0x68);
-    await adc.init();
+    await this.adc.init();
 
     // 最初のデータを取るまで3秒待つ
     await common.sleep(3000);
