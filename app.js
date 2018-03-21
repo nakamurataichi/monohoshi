@@ -9,11 +9,6 @@ class App {
     this.testResult = null;
   }
 
-  async first() {
-    const firstData = await this.adc.read().catch(err => { throw err; });
-    return firstData.value;
-  }
-
   async test() {
     const testResults = [];
     while (true) {
