@@ -9,7 +9,7 @@ class MCP3425 {
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress).catch(err => { throw err; });
 
     console.log(`init ok: ${this.i2cSlave}`);
-    return; 
+    return;
   }
 
   compose(adc_h, adc_l) {
