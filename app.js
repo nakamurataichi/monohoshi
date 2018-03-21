@@ -48,7 +48,7 @@ class App {
 
     while (true) {
       const adcData = await this.adc.read().catch(err => { throw err; });
-      ws.send(adcData);
+      this.ws.send(adcData);
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
