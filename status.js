@@ -17,6 +17,6 @@ class Status {
 
   setStatus() {
     status.labelElement.textContent = `${this.onoff} です`;
-    status.imageElement.style.src = `./${this.onoff}.png`;
+    status.imageElement.src = `./${this.onoff}.png`;
   }
 }

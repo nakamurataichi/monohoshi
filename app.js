@@ -8,10 +8,15 @@ class App {
     this.adc = null;
     this.testResult = null;
 
-    this.ws.onmessage =  message => {
-      this.voltElement.textContent = `VIN+ : ${message.volt} V`;
-      this.valueElement.textContent = message.value;
-      console.log(message.volt);
+    this.ws.onmessage = message => {
+      const socketData = [];
+      for (const key in message.data) {
+        socketData.push(message.data[key]);
+      }
+      const data = socketData.join("").split(",");
+
+      this.voltElement.textContent = `VIN+ : ${data[0]} V`;
+      this.valueElement.textContent = data[1];
     };
   }
 
@@ -48,7 +53,7 @@ class App {
 
     while (true) {
       const adcData = await this.adc.read().catch(err => { throw err; });
-      this.ws.send(adcData);
+      this.ws.send(Object.values(adcData));
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
