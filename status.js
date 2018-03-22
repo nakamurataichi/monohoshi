@@ -12,11 +12,17 @@ class Status {
 
   toggleStatus() {
     status.onoff = status.onoff === "OFF" ? "ON" : "OFF";
-    status.setStatus();
+    status.updateStatus();
+    app.sendStatus(status.onoff);
   }
 
-  setStatus() {
+  updateStatus() {
     status.labelElement.textContent = `${this.onoff} です`;
     status.imageElement.src = `./${this.onoff}.png`;
+  }
+
+  setStatus(status) {
+    this.onoff = status;
+    this.updateStatus();
   }
 }

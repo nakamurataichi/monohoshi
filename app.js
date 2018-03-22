@@ -1,6 +1,6 @@
 class App {
   constructor() {
-    this.ws = new WebSocket(config.wsServer);
+    this.socket = new WebSocket(config.wsServer);
     this.voltElement = document.getElementById("volt");
     this.valueElement = document.getElementById("value");
 
@@ -8,11 +8,14 @@ class App {
     this.adc = null;
     this.testResult = null;
 
-    this.ws.onmessage = message => {
+    this.socket.onmessage = message => {
       const data = JSON.parse(message.data);
       if (data.type === "data") {
         this.voltElement.textContent = `VIN+ : ${data.volt} V`;
         this.valueElement.textContent = data.value;
+      }
+      if (data.type === "status" && data.onoff !== "COMMAND") {
+        status.setStatus(data.onoff);
       }
     };
   }
@@ -51,12 +54,19 @@ class App {
     while (true) {
       const adcData = await this.adc.read().catch(err => { throw err; });
       adcData.type = "data";
-      this.ws.send(JSON.stringify(adcData));
+      this.socket.send(JSON.stringify(adcData));
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
 
       await common.sleep(config.waiting);
     };
+  }
+
+  sendStatus(onoff) {
+    this.socket.send(JSON.stringify({
+      type: "status",
+      onoff: onoff
+    }));
   }
 }
