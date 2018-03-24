@@ -28,8 +28,8 @@ class App {
       const adcData = await this.adc.read().catch(err => { throw err; });
       testResults.push(adcData.value);
 
-      this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
-      this.valueElement.textContent = adcData.value;
+      //this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
+      //this.valueElement.textContent = adcData.value;
 
       // データが 50 になったら、テストを終了するために処理ループを削除
       if (testResults.length === 50) {
@@ -39,7 +39,9 @@ class App {
     };
 
     // 中央値を整数にして返す
-    return Math.floor(common.median(testResults));
+    const result = Math.floor(common.median(testResults));
+    console.log(result);
+    return result;
   }
 
   async run() {
