@@ -31,8 +31,8 @@ class App {
       //this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       //this.valueElement.textContent = adcData.value;
 
-      // データが 20 になったら、テストを終了するために処理ループを削除
-      if (testResults.length === 20) {
+      // データが 5 になったら、テストを終了するために処理ループを削除
+      if (testResults.length === 5) {
         break;
       }
       await common.sleep(config.waiting);
@@ -90,7 +90,7 @@ class App {
 
       this.results.push(adcData.value);
 
-      if (this.results.length === 20) {
+      if (this.results.length === 5) {
         if (this.testResult < common.median(this.results)) {
           this.sendStatus("ON");
           return;
@@ -101,8 +101,6 @@ class App {
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
-
-
 
       await common.sleep(config.waiting);
     };

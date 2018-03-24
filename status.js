@@ -21,7 +21,6 @@ class Status {
       app.stop();
     }
     status.updateStatus();
-    //app.sendStatus(status.onoff);
   }
 
   updateStatus() {
