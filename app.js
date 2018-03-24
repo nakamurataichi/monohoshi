@@ -88,17 +88,20 @@ class App {
       this.socket.send(JSON.stringify(adcData));
 
       this.results.push(adcData.value);
-      if (this.results.length === 21) {
+
+      if (this.results.length === 20) {
+        if (this.testResult < common.median(this.results)) {
+          this.sendStatus("ON");
+          return;
+        }
+
         this.results.shift();
       }
 
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
 
-      if (this.testResult < common.median(this.results)) {
-        this.sendStatus("ON");
-        return;
-      }
+
 
       await common.sleep(config.waiting);
     };
