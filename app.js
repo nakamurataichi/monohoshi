@@ -7,6 +7,8 @@ class App {
     this.i2cAccess = null;
     this.adc = null;
     this.testResult = null;
+    this.results = [];
+    this.measure = null;
 
     this.socket.onmessage = message => {
       const data = JSON.parse(message.data);
@@ -29,8 +31,8 @@ class App {
       this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       this.valueElement.textContent = adcData.value;
 
-      // データが 20 になったら、テストを終了するために処理ループを削除
-      if (testResults.length === 20) {
+      // データが 50 になったら、テストを終了するために処理ループを削除
+      if (testResults.length === 50) {
         break;
       }
       await common.sleep(config.waiting);
@@ -47,6 +49,7 @@ class App {
     this.adc = new MCP3425(adcPort, 0x68);
     await this.adc.init();
 
+    /*
     // 最初のデータを取るまで3秒待つ
     await common.sleep(3000);
     this.testResult = await this.test();
@@ -61,12 +64,48 @@ class App {
 
       await common.sleep(config.waiting);
     };
+    */
   }
 
   sendStatus(onoff) {
+    /*
     this.socket.send(JSON.stringify({
       type: "status",
       onoff: onoff
     }));
+    */
+  }
+
+  async start() {
+    this.measure = true;
+    // 最初のデータを取るまで3秒待つ
+    await common.sleep(3000);
+    this.testResult = 500 + await this.test();
+
+    while (this.measure) {
+      const adcData = await this.adc.read().catch(err => { throw err; });
+      adcData.type = "data";
+      this.socket.send(JSON.stringify(adcData));
+
+      this.results.push(adcData.value);
+      if (results.length === 21) {
+        this.results.shift();
+      }
+
+      this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
+      this.valueElement.textContent = adcData.value;
+
+      if (this.testResult < common.median(this.results)) {
+        this.sendStatus("ON");
+        return;
+      }
+
+      await common.sleep(config.waiting);
+    };
+  }
+
+  stop() {
+    this.measure = false;
+    this.sendStatus("OFF");
   }
 }

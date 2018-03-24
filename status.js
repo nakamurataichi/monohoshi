@@ -1,6 +1,7 @@
 class Status {
   constructor() {
     this.onoff = "OFF";
+    this.mode = "";
     this.labelElement = document.getElementById("status-label");
     this.imageElement = document.getElementById("status-image");
     this.buttonElement = document.getElementById("status-button");
@@ -12,12 +13,19 @@ class Status {
 
   toggleStatus() {
     status.onoff = status.onoff === "OFF" ? "ON" : "OFF";
+    if (status.onoff === "ON") {
+      status.mode = "Start";
+      app.start();
+    } else {
+      status.mode = "Stop";
+      app.stop();
+    }
     status.updateStatus();
-    app.sendStatus(status.onoff);
+    //app.sendStatus(status.onoff);
   }
 
   updateStatus() {
-    status.labelElement.textContent = `${this.onoff} です`;
+    status.labelElement.textContent = `${this.mode} です`;
     status.imageElement.src = `./${this.onoff}.png`;
   }
 
