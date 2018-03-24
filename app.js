@@ -31,8 +31,8 @@ class App {
       //this.voltElement.textContent = `VIN+ : ${adcData.volt} V`;
       //this.valueElement.textContent = adcData.value;
 
-      // データが 50 になったら、テストを終了するために処理ループを削除
-      if (testResults.length === 50) {
+      // データが 20 になったら、テストを終了するために処理ループを削除
+      if (testResults.length === 20) {
         break;
       }
       await common.sleep(config.waiting);
