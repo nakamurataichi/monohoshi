@@ -68,12 +68,10 @@ class App {
   }
 
   sendStatus(onoff) {
-    /*
     this.socket.send(JSON.stringify({
       type: "status",
       onoff: onoff
     }));
-    */
   }
 
   async start() {
@@ -88,7 +86,7 @@ class App {
       this.socket.send(JSON.stringify(adcData));
 
       this.results.push(adcData.value);
-      if (results.length === 21) {
+      if (this.results.length === 21) {
         this.results.shift();
       }
 
