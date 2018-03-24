@@ -7,7 +7,7 @@ class App {
     this.i2cAccess = null;
     this.adc = null;
     this.testResult = null;
-    this.results = [];
+    this.results = null;
     this.measure = null;
 
     this.socket.onmessage = message => {
@@ -77,6 +77,7 @@ class App {
   }
 
   async start() {
+    this.results = [];
     this.measure = true;
     // 最初のデータを取るまで3秒待つ
     await common.sleep(3000);
